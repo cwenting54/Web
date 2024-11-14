@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Reset design */
+    html, body, header, footer, menu, nav, div, span, h1, h2, h3, h4,h5, h6, p, a, b, u, i, strong, em, ins, del, s, ul, ol, li, img, input, button, form {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        list-style: none;
+        color: inherit;
+        font-family: sans-serif;
+        /* 圖片下方不會留白 */
+        vertical-align: bottom;
+    }
+    img {
+        width: 100%;
+    }
+    /* Reset End */
+
+    /* Var's design */
+    :root{
+        --themeColor: #1B1B1B;
+        --lightColor: white;
+        --grayColor: #a1a1a1;
+        --darkgray: #808080;
+        /* 微透明 */
+        --alphaColor: #1B1B1B80;
+        --btnColor: #A1C6D9;
+    }
+    .btn {
+        display: inline-block;
+        padding: 0.15em 1em;
+        line-height: 2em;
+        background-color: var(--btnColor);
+        color: var(--lightColor);
+        font-weight: 900;
+        box-shadow: 3px 3px 3px #2f2f2f;
+        transition: all 300ms ease;
+    }
+    .btn:hover{
+        filter:brightness(1.1);
+    }
+    .btn:active {
+        box-shadow: 3px 3px 3px #2f2f2f inset;
+        filter:brightness(0.9);
+    }
+    /* flex做在父元素 */
+    .flex{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .grid-1{
+        width: calc(100% / 12 * 1);
+    }
+    .grid-2{
+        width: calc(100% / 12 * 2);
+    }
+    .grid-3{
+        width: calc(100% / 12 * 3);
+    }
+    .grid-4{
+        width: calc(100% / 12 * 4);
+    }
+    .grid-5{
+        width: calc(100% / 12 * 5);
+    }
+    .grid-6{
+        width: calc(100% / 12 * 6);
+    }
+    .grid-7{
+        width: calc(100% / 12 * 7);
+    }
+    .grid-8{
+        width: calc(100% / 12 * 8);
+    }
+    .grid-9{
+        width: calc(100% / 12 * 9);
+    }
+    .grid-10{
+        width: calc(100% / 12 * 10);
+    }
+    .grid-11{
+        width: calc(100% / 12 * 11);
+    }
+    .grid-12{
+        width: calc(100% / 12 * 12);
+    }
+    header{
+        width: 100%;
+        height: 80px;
+        line-height: 80px;
+        text-align: center;
+        position: relative;
+        z-index: 20;
+    }
+    header menu{
+        display: none;
+    }
+    header menu ul{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-weight: 900;
+        background-color: white;
+    }
+    header menu ul li{
+        width: 100%;
+    }
+    header menu ul li a{
+        display: block;
+        padding: 0 1em;
+        transition: all 300ms ease;
+    }
+    header menu ul li:hover{
+        background-color: var(--themeColor);
+        color: var(--lightColor);
+    }
+    header nav{
+        width: 2em;
+        height: 1em;
+        position: absolute;
+        top: calc(40px - 0.5em);
+        right: 2em;
+    }
+    /* 
+        *[class^=val] 全部class中val開頭字相同 
+        *[class$=val] 全部class中val結尾字相同 
+        *[class*=val] 全部class中val特定字元相同 
+    */
+    header nav *[class^=ham]{
+        width: 100%;
+        height: 2px;
+        background-color: var(--themeColor);
+        position: absolute;
+        transform-origin: left center;
+    }
+    header nav .hamT{
+        top:0;
+    }
+    header nav .hamM{
+        top: calc(0.5em - 1px);
+    }
+    header nav .hamB{
+        bottom: 0;
+    }
+    #theme{
+        width: 100%;
+        height: calc(100vh - 80px);
+        position: relative;
+    }
+    #theme .slide{
+        width: 100%;
+        height: calc(100vh - 80px);
+        overflow: hidden;
+        position: relative;
+    }
+    #theme .slide .img {
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateX(100%);
+        animation: sliding 25s linear infinite;
+    }
+    #theme .slide .img:nth-of-type(1){
+        background-image: url(https://picsum.photos/1600/900?random=1);
+    }
+    #theme .slide .img:nth-of-type(2){
+        background-image: url(https://picsum.photos/1600/900?random=2);
+        animation-delay: 5s;
+    }
+    #theme .slide .img:nth-of-type(3){
+        background-image: url(https://picsum.photos/1600/900?random=3);
+        animation-delay: 10s;
+    }
+    #theme .slide .img:nth-of-type(4){
+        background-image: url(https://picsum.photos/1600/900?random=4);
+        animation-delay: 15s;
+    }
+    #theme .slide .img:nth-of-type(5){
+        background-image: url(https://picsum.photos/1600/900?random=5);
+        animation-delay: 20s;
+    }
+
+    @keyframes sliding{
+        0%{
+            transform: translateX(100%);
+            z-index: 1;
+        }
+        4%{
+            transform: translateX(0);
+            z-index: 6;
+        }
+        20%{
+            transform: translateX(0);
+            z-index: 6;
+        }
+        24%{
+            transform: translateX(-100%);
+            z-index: 6;
+        }
+        25%{
+            transform: translateX(-100%);
+            z-index: 1;
+        }
+    }
+    #theme .push{
+        width: 100%;
+        height: calc(100vh - 80px);
+        background-color: var(--alphaColor);
+        color: var(--lightColor);
+        line-height: 2.6em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        padding-left: 2em;
+        padding-right: 2em;
+        padding-top: calc(50vh - 6.6em);
+    }
+    #introduction{
+        width: 100%;
+        padding: 3em 1em;
+        
+    }
+    #introduction .grid-12{
+        padding: 1em;        
+    }
+    #introduction .grid-12 i {
+        color:var(--btnColor);
+    }
+    #introduction .grid-12 p {
+        text-align: justify;
+        padding: 0.5em 0;
+        color: var(--darkgray);
+    }
+    #service {
+        width: 100%;
+    }
+    #service .grid-12{
+        background-color: var(--themeColor);
+        color: var(--lightColor);
+        text-align: center;
+        padding: 4em 1em;
+    }
+    #service .grid-6{
+        overflow: hidden;
+        position: relative;
+    }
+    #service .grid-6 img{
+        filter: brightness(0.5);
+        transition: all 500ms ease;
+    }
+    #service .grid-6:hover img{
+        filter: brightness(1.1);
+        transform: scale(1.5);
+    }
+    #service .grid-6 .push{
+        width: 100%;
+        height: 2.5em;
+        line-height: 2.5em;
+        color: var(--lightColor);
+        text-align: center;
+        background-color: var(--alphaColor);
+        position: absolute;
+        left: 0;
+        bottom: -2.5em;
+        transition: all 500ms ease;
+    }
+    #service .grid-6:hover .push{
+        bottom: 0;
+    }
+    #service02 {
+        width: 100%;
+    }
+    #service02 .grid-11{
+        padding: 1em;
+        margin: 0.5em;
+    }
+    #service02 .grid-11:nth-of-type(1) {
+        padding: 2em 1.25em;
+        margin: 0em;
+    }
+    #service02 .grid-11 p{
+        padding: 1em 0;
+    }
+    #sale{
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        background-image: url(https://picsum.photos/1000/1000?random=1);
+        background-size: cover;
+        background-position: center;
+    }
+    #sale .grid-12{
+        background-color: var(--alphaColor);
+        color: var(--lightColor);
+        padding: 0 1em;
+        padding-top: calc(45vh - 6em);
+    }
+    #sale .grid-12 p{
+        padding: 0.5em 0;
+    }
+    #contact{
+        width: 100%;
+        line-height: 2.5em;
+        background-color: var(--themeColor);
+    }
+    #contact .grid-12:nth-of-type(1){
+        text-align: center;
+        padding: 3em 1em;    
+        background-color: var(--lightColor);
+    }
+    #contact .grid-s-11{
+        overflow: hidden;
+        position: relative;
+        margin: 0.5em;
+    }
+    #contact .grid-s-11 .push{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top:0;
+        left: 0;
+        padding: 5em 1em 0;
+        background-color: transparent;
+        color: transparent;
+        transition: all 300ms ease;
+    }
+    #contact .grid-s-11 .push .btn{
+        opacity: 0;
+    }
+    #contact .grid-s-11:hover .push{
+        background-color: var(--alphaColor);
+        color: var(--lightColor);
+        padding: 1.5em 1em 0;
+    }
+    #contact .grid-s-11:hover .push .btn{
+        opacity: 1;
+    }
+    #contact .grid-11{
+        padding: 0.75em;
+        line-height: 1.8em;
+        color: var(--grayColor);
+    }
+    #contact .grid-11 h3{
+        padding: 4em 0 3em;
+    }
+    #contact .grid-11 table{
+        width: 100%;
+    }
+    #contact .grid-11 p{
+        padding: 0 0 1em;
+    }
+    #contact .grid-11 a{
+        color:var(--btnColor);
+    }
+    #contact .grid-11 hr{
+        border-color: black;
+        margin: 1em 0;
+    }
+    #contact .grid-11 i{
+        vertical-align: middle;
+    }
+    footer{
+        background-color: #080808;
+        color: var(--grayColor);
+        padding: 1.5em;
+        text-align: center;
+    }
+    @media only screen and (min-width: 375px) {
+        .grid-s-1{
+            width: calc(100% / 12 * 1);
+        }
+        .grid-s-2{
+            width: calc(100% / 12 * 2);
+        }
+        .grid-s-3{
+            width: calc(100% / 12 * 3);
+        }
+        .grid-s-4{
+            width: calc(100% / 12 * 4);
+        }
+        .grid-s-5{
+            width: calc(100% / 12 * 5);
+        }
+        .grid-s-6{
+            width: calc(100% / 12 * 6);
+        }
+        .grid-s-7{
+            width: calc(100% / 12 * 7);
+        }
+        .grid-s-8{
+            width: calc(100% / 12 * 8);
+        }
+        .grid-s-9{
+            width: calc(100% / 12 * 9);
+        }
+        .grid-s-10{
+            width: calc(100% / 12 * 10);
+        }
+        .grid-s-11{
+            width: calc(100% / 12 * 11);
+        }
+        .grid-s-12{
+            width: calc(100% / 12 * 12);
+        }
+    }
+    @media only screen and (min-width: 768px) {
+        .grid-m-1{
+            width: calc(100% / 12 * 1);
+        }
+        .grid-m-2{
+            width: calc(100% / 12 * 2);
+        }
+        .grid-m-3{
+            width: calc(100% / 12 * 3);
+        }
+        .grid-m-4{
+            width: calc(100% / 12 * 4);
+        }
+        .grid-m-5{
+            width: calc(100% / 12 * 5);
+        }
+        .grid-m-6{
+            width: calc(100% / 12 * 6);
+        }
+        .grid-m-7{
+            width: calc(100% / 12 * 7);
+        }
+        .grid-m-8{
+            width: calc(100% / 12 * 8);
+        }
+        .grid-m-9{
+            width: calc(100% / 12 * 9);
+        }
+        .grid-m-10{
+            width: calc(100% / 12 * 10);
+        }
+        .grid-m-11{
+            width: calc(100% / 12 * 11);
+        }
+        .grid-m-12{
+            width: calc(100% / 12 * 12);
+        }
+        #service02 .grid-11:nth-of-type(1) {
+            padding: 2em 0em;
+            margin: 0em;
+        }
+        #sale{
+            height: 50vh;
+        }
+        #sale .grid-12{
+            padding-top: calc(25vh - 3em);
+        }
+        #contact .grid-12{
+            margin: 0.1em;
+        }
+        footer br{
+            display: none;
+        }
+    }
+    @media only screen and (min-width: 1024px) {
+        .grid-l-1{
+            width: calc(100% / 12 * 1);
+        }
+        .grid-l-2{
+            width: calc(100% / 12 * 2);
+        }
+        .grid-l-3{
+            width: calc(100% / 12 * 3);
+        }
+        .grid-l-4{
+            width: calc(100% / 12 * 4);
+        }
+        .grid-l-5{
+            width: calc(100% / 12 * 5);
+        }
+        .grid-l-6{
+            width: calc(100% / 12 * 6);
+        }
+        .grid-l-7{
+            width: calc(100% / 12 * 7);
+        }
+        .grid-l-8{
+            width: calc(100% / 12 * 8);
+        }
+        .grid-l-9{
+            width: calc(100% / 12 * 9);
+        }
+        .grid-l-10{
+            width: calc(100% / 12 * 10);
+        }
+        .grid-l-11{
+            width: calc(100% / 12 * 11);
+        }
+        .grid-l-12{
+            width: calc(100% / 12 * 12);
+        }
+        header menu{
+            display: block!important;
+        }
+        header menu ul li{
+            width: auto;
+        }
+        header nav{
+            display: none;
+        }
+        #sale{
+            height: 50vh;
+        }
+        #sale .grid-12{
+            padding-top: calc(15vh - 4.5em);
+        }
+        #contact .grid-12{
+            margin: 0em;
+        }
+    }
+    @media only screen and (min-width: 1366px) {
+        .grid-xl-1{
+            width: calc(100% / 12 * 1);
+        }
+        .grid-xl-2{
+            width: calc(100% / 12 * 2);
+        }
+        .grid-xl-3{
+            width: calc(100% / 12 * 3);
+        }
+        .grid-xl-4{
+            width: calc(100% / 12 * 4);
+        }
+        .grid-xl-5{
+            width: calc(100% / 12 * 5);
+        }
+        .grid-xl-6{
+            width: calc(100% / 12 * 6);
+        }
+        .grid-xl-7{
+            width: calc(100% / 12 * 7);
+        }
+        .grid-xl-8{
+            width: calc(100% / 12 * 8);
+        }
+        .grid-xl-9{
+            width: calc(100% / 12 * 9);
+        }
+        .grid-xl-10{
+            width: calc(100% / 12 * 10);
+        }
+        .grid-xl-11{
+            width: calc(100% / 12 * 11);
+        }
+        .grid-xl-12{
+            width: calc(100% / 12 * 12);
+        }
+    } 
+    </style>
+</head>
+<body>
+   <header class="flex">
+        <div class="logo grid-12 grid-l-4">
+            <h1>MyLogo</h1>
+        </div>
+        <menu class="grid-12 grid-l-8">
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">PAGES</a></li>
+                <li><a href="#">DROPDOWN</a></li>
+                <li><a href="#">LINK TEXT</a></li>
+                <li><a href="#">LINK TEXT</a></li>
+            </ul>
+        </menu>
+        <nav>
+            <div class="hamT"></div>
+            <div class="hamM"></div>
+            <div class="hamB"></div>
+        </nav>
+   </header>
+   <div id="theme">
+        <div class="slide">
+            <div class="img"></div>
+            <div class="img"></div>
+            <div class="img"></div>
+            <div class="img"></div>
+            <div class="img"></div>
+        </div>
+        <div class="push">
+            <h2>THEME'S DESIGN</h2>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic, veritatis.</p>
+            <a href="" class="btn">MORE</a>
+        </div>
+   </div>
+   <div id="introduction" class="flex">
+        <div class="grid-12 grid-m-5" id="left">
+            <h3>Introduction's Design</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime sequi vel ullam facilis iste obcaecati ut, eveniet doloremque deserunt laboriosam!</p>
+        </div>
+        <div class="grid-12 grid-m-5" id="right">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi deserunt hic enim, magnam rem fuga et, rerum amet nemo quam molestias numquam. Sapiente, laboriosam voluptates?</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, officiis?</p>
+        </div>
+
+        <div class="grid-12 grid-m-5 grid-l-3">
+            <i class="fa-solid fa-leaf fa-4x"></i>
+            <h4>TITLE</h4>
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, assumenda. Provident vel, quam recusandae eos iste est possimus officiis reiciendis dolore, aut nulla illo. Sequi, quam. Quo cumque consectetur quam!
+            </p>
+        </div>
+        <div class="grid-12 grid-m-5 grid-l-4">
+            <i class="fa-brands fa-canadian-maple-leaf fa-4x"></i>
+            <h4>TITLE</h4>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi officiis qui nesciunt labore. Molestias labore alias inventore libero nihil quas in pariatur voluptas mollitia aspernatur iste, fuga assumenda, laudantium veritatis.
+            </p>
+        </div>
+        <div class="grid-12 grid-m-5 grid-l-3">
+            <i class="fa-brands fa-pagelines fa-4x"></i>
+            <h4>TITLE</h4>
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed, assumenda. Provident vel, quam recusandae eos iste est possimus officiis reiciendis dolore, aut nulla illo. Sequi, quam. Quo cumque consectetur quam!
+            </p>
+        </div>
+   </div>
+   <div id="service" class="flex">
+        <div class="grid-12">
+            <h2>SERVICE'S Design</h2>
+            <p>Lorem ipsum dolor sit amet consectetur.</p>
+        </div>
+        <div class="grid-6 grid-m-4 grid-l-2">
+            <img src="https://picsum.photos/600/600?random=1" alt="">
+            <div class="push">
+                <h3>TITLE</h3>
+            </div>
+        </div>
+        <div class="grid-6 grid-m-4 grid-l-2">
+            <img src="https://picsum.photos/600/600?random=2" alt="">
+            <div class="push">
+                <h3>TITLE</h3>
+            </div>
+        </div>
+        <div class="grid-6 grid-m-4 grid-l-2">
+            <img src="https://picsum.photos/600/600?random=3" alt="">
+            <div class="push">
+                <h3>TITLE</h3>
+            </div>
+        </div>
+        <div class="grid-6 grid-m-4 grid-l-2">
+            <img src="https://picsum.photos/600/600?random=4" alt="">
+            <div class="push">
+                <h3>TITLE</h3>
+            </div>
+        </div>
+        <div class="grid-6 grid-m-4 grid-l-2">
+            <img src="https://picsum.photos/600/600?random=5" alt="">
+            <div class="push">
+                <h3>TITLE</h3>
+            </div>
+        </div>
+        <div class="grid-6 grid-m-4 grid-l-2">
+            <img src="https://picsum.photos/600/600?random=6" alt="">
+            <div class="push">
+                <h3>TITLE</h3>
+            </div>
+        </div>
+   </div>
+   <div id="service02" class="flex">
+        <div class="grid-11 grid-m-10 grid-l-9">
+            <h2>SERVIC02'S Design</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus!</p>
+        </div>
+        <div class="grid-11 grid-m-5 grid-l-3">
+            <img src="https://picsum.photos/800/500?random=1" alt="">
+            <h3>TITLE</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore accusantium eius fugiat impedit nisi deleniti aut tempora...</p>
+            <a href="#" class="btn">MORE</a>
+        </div>
+        <div class="grid-11 grid-m-5 grid-l-3">
+            <img src="https://picsum.photos/800/500?random=2" alt="">
+            <h3>TITLE</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore accusantium eius fugiat impedit nisi deleniti aut tempora...</p>
+            <a href="#" class="btn">MORE</a>
+        </div>
+        <div class="grid-11 grid-m-5 grid-l-3">
+            <img src="https://picsum.photos/800/500?random=3" alt="">
+            <h3>TITLE</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore accusantium eius fugiat impedit nisi deleniti aut tempora...</p>
+            <a href="#" class="btn">MORE</a>
+        </div>
+   </div>
+   <div id="sale">
+        <div class="grid-12 grid-l-6">
+            <h2>TITLE</h2>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima repudiandae nisi reprehenderit labore quaerat quisquam dolorum voluptas possimus! Culpa commodi ipsa, facilis quis nostrum voluptate...</p>
+            <a href="#" class="btn">MORE</a>
+        </div>
+   </div>
+   <div id="contact" class="flex">
+        <div class="grid-12">
+            <h2>CONTACT'S Design</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, laboriosam.</p>
+            <a href="#" class="btn">MORE</a>
+            <h5>** Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, delectus!</h5>
+        </div>
+        <div class="grid-12 grid-s-11 grid-m-5 grid-l-4">
+            <img src="https://picsum.photos/800/650?random=1" alt="">
+            <div class="push">
+                <h3>TITLE</h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse adipisci cupiditate earum, fugit repellendus voluptates ducimus placeat excepturi inventore! Omnis!</p>
+                <a href="#" class="btn">MORE</a>
+            </div>
+        </div>
+        <div class="grid-12 grid-s-11 grid-m-5 grid-l-4">
+            <img src="https://picsum.photos/800/650?random=2" alt="">
+            <div class="push">
+                <h3>TITLE</h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse adipisci cupiditate earum, fugit repellendus voluptates ducimus placeat excepturi inventore! Omnis!</p>
+                <a href="#" class="btn">MORE</a>
+            </div>
+        </div>
+        <div class="grid-12 grid-s-11 grid-m-5 grid-l-4">
+            <img src="https://picsum.photos/800/650?random=3" alt="">
+            <div class="push">
+                <h3>TITLE</h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse adipisci cupiditate earum, fugit repellendus voluptates ducimus placeat excepturi inventore! Omnis!</p>
+                <a href="#" class="btn">MORE</a>
+            </div>
+        </div>
+        <div class="grid-12 flex">
+            <div class="grid-11 grid-m-5 grid-l-2">
+                <h3>TITLE</h3>
+                <p>Lorem ipsum dolor sit, amet consectet inventore facilis nihil consectetur assumenda accusantium! Consequuntur eius ipsa possimus aperiam animi, soluta repellat odio dignissimos quas ab illum a consectetur?</p>
+                <p>Lorem ipsum dol qui fuga vitae voluptatum! Tempore dolore commodi maxime illo culpa non quisquam asperiores aperiam, corporis natus voluptas doloribus quaerat dolorem.</p>
+            </div>
+            <div class="grid-11 grid-m-5 grid-l-2">
+                <h3>TITLE</h3>
+                <table>
+                    <tr>
+                        <td><i class="fa-solid fa-location-dot"></i></td>
+                        <td>台北市信義區信義路一段11巷11弄11號1樓</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><hr></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-phone"></i></td>
+                        <td>（02）1234-5678<br>
+                            （02）2234-5678</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><hr></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i class="fa-solid fa-fax"></i>
+                        </td>
+                        <td>
+                            （02）3234-5678
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><hr></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i class="fa-regular fa-envelope"></i>
+                        </td>
+                        <td>
+                            sample@gmail.com
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="grid-11 grid-m-5 grid-l-2">
+                <h3>TITLE</h3>
+                <p><a href="#">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</a></p><hr>
+                <p><a href="#">Lorem ipsum dolor sit amet consectetur. Iure, ratione!</a></p><hr>
+                <p><a href="#">Lorem nsectetur adipisicing elit. Iure, ratione!</a></p><hr>
+                <p><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, ratione!</a></p><hr>
+                <p><a href="#">Lorem ipsum dolor sit amet  Iure, ratione!</a></p>
+            </div>
+            <div class="grid-11 grid-m-5 grid-l-2">
+                <h3>TITLE</h3>
+                <h4><a href="#">高考藥物很快大</a></h4>
+                <p>特別是那種，遇到你在儀器重要醫學三大含有主流對於低價往往時期，允許提升神秘說是，請大家家族可用。</p><hr>
+                <h4><a href="#">高考藥物很快大</a></h4>
+                <p> 特別是那種，遇到你在儀器重要醫學三大含有主流對於低價往往時期，允許提升神秘說是請大。</p>
+            </div>
+        </div>
+        
+
+   </div>
+   <footer>
+    Copyright © 2024 Wen. All rights reserved.<br>
+    版權所有© 2024 陳雯婷 
+   </footer>
+</body>
+</html>
+<script>
+    let nav = document.getElementsByTagName("nav")[0];
+    let hamT = document.getElementsByClassName("hamT")[0];
+    let hamM = document.getElementsByClassName("hamM")[0];
+    let hamB = document.getElementsByClassName("hamB")[0];
+    let menu = document.getElementsByTagName("menu")[0];
+    nav.addEventListener("click", function(){
+        if(menu.style.display == "none" || menu.style.display == ""){
+            menu.style.display = "block";
+            hamT.style.transform = "rotate(28deg)";
+            hamB.style.transform = "rotate(-28deg)";
+            hamM.style.opacity = 0;
+        }else{
+            menu.style.display = "none";
+            hamT.style.transform = "rotate(0deg)";
+            hamB.style.transform = "rotate(0deg)";
+            hamM.style.opacity = 1;
+        }
+    })
+</script>
+
+<!-- <script>
+    let left = document.getElementById("left");
+    let right = document.getElementById("right");
+    let intro = document.getElementById("introduction");
+    // CSS 通常先在CSS做好
+        left.style.transform = "translateX(-150%)";
+        right.style.transform = "translateX(150%)";
+        left.style.transition = "all 500ms ease";    
+        right.style.transition = "all 500ms ease";    
+        intro.style.overflow = "hidden";
+    // CSS END
+    setInterval(function(){
+        console.log(window.scrollY);
+        if(intro.scrollHeight < (window.scrollY + 100 )){
+            left.style.transform = "translateX(0)";
+            right.style.transform = "translateX(0)"; 
+        }else{
+            left.style.transform = "translateX(-150%)";
+            right.style.transform = "translateX(150%)";
+        }
+    },500)
+    console.log(intro.scrollHeight);
+</script> -->
