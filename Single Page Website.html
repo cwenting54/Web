@@ -828,27 +828,3 @@
         }
     })
 </script>
-
-<!-- <script>
-    let left = document.getElementById("left");
-    let right = document.getElementById("right");
-    let intro = document.getElementById("introduction");
-    // CSS 通常先在CSS做好
-        left.style.transform = "translateX(-150%)";
-        right.style.transform = "translateX(150%)";
-        left.style.transition = "all 500ms ease";    
-        right.style.transition = "all 500ms ease";    
-        intro.style.overflow = "hidden";
-    // CSS END
-    setInterval(function(){
-        console.log(window.scrollY);
-        if(intro.scrollHeight < (window.scrollY + 100 )){
-            left.style.transform = "translateX(0)";
-            right.style.transform = "translateX(0)"; 
-        }else{
-            left.style.transform = "translateX(-150%)";
-            right.style.transform = "translateX(150%)";
-        }
-    },500)
-    console.log(intro.scrollHeight);
-</script> -->
